@@ -11,19 +11,15 @@ import java.util.List;
 public class ArtistService implements ArtistServiceInterface {
 
     private final ArtistRepository artistRepository;
-    private final AlbumServiceClient albumServiceClient;
+
 
     @Autowired
-    public ArtistService(ArtistRepository artistRepository, AlbumServiceClient albumServiceClient) {
+    public ArtistService(ArtistRepository artistRepository) {
         this.artistRepository = artistRepository;
-        this.albumServiceClient = albumServiceClient;
     }
 
     @Override
     public Artist createArtist(Artist artist) {
-        if (!albumServiceClient.validateAlbumIds(artist.getAlbumIds())) {
-            throw new IllegalArgumentException("Invalid album IDs");
-        }
         return artistRepository.save(artist);
     }
 
